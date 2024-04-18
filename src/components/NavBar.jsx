@@ -26,7 +26,7 @@ function NavBar() {
     
 
   return (
-    <section className='w-full h-14 flex flex-row justify-center font-Poppins text-lg'>
+    <section className='w-full h-16 flex flex-row justify-center font-Poppins text-lg fixed z-50 bg-Fondo'>
             {/* Contenedor NavBar */}
         <div className='w-full lg:w-11/12 xl:w-8/12 h-full flex flex-row text-slate-200 justify-between px-5 lg:px-0 lg:justify-around items-center'>
             <span className='text-3xl font-semibold absolute z-50 lg:static'>PelisDev</span>
@@ -38,7 +38,7 @@ function NavBar() {
                     <Nav link="" text="Peliculas"/>
                     <li className='relative' id='categories'>
                         <a href="" className='hover:text-blue-500 py-3 flex items-center gap-1'>Categorías {iconDown}</a>
-                        <div className={`${menuCategoriess ? 'h-40' : 'h-0'} absolute mt-0 w-40 bg-slate-800 shadow-md rounded-md transition-all duration-200 overflow-hidden flex flex-col justify-center`} id='menuCategorias'>
+                        <div className={`${menuCategoriess ? 'h-40' : 'h-0'} absolute z-50 mt-0 w-40 bg-slate-800 shadow-md rounded-md transition-all duration-200 overflow-hidden flex flex-col justify-center`} id='menuCategorias'>
                             <ul className={`${!menuCategoriess && 'hidden'} flex flex-col gap-3 px-3`}>
                                 <Nav link="" text="Peliculas"/>
                                 <Nav link="" text="Peliculas"/>
