@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Nav from './ui/Nav';
 
-function NavBar() {
+function NavBar({setSearch}) {
 
-    const [menuCategoriess, setmenuCategoriess] = useState(false)
+    const [menuCategoriess, setmenuCategoriess] = useState(false);
+    const [categoriess, setCategoriess] = useState([]);
 
     const [Menu, setMenu] = useState(false)
 
@@ -20,10 +21,37 @@ function NavBar() {
             menu.classList.add('hidden');
             setmenuCategoriess(false)
         }); 
-    }, [])
-    
 
-    
+        categoriesMovies()
+    }, []);
+
+
+    const handleCategoryClick = async(category) => {
+        try{
+            const response = await fetch(`http://api.themoviedb.org/3/discover/movie?api_key=959df7316541f78819dc72ef1dd3afc2&language=es-MX&with_genres=${category.id}`);
+            const result = await response.json();
+            setSearch(result.results);
+            console.log(category.id)
+        }
+
+        catch(ex) {
+            console.log("Ha ocurrido un error: ", ex)
+        }
+    };
+
+
+    const categoriesMovies = async() => {
+        try{
+            const response = await fetch('http://api.themoviedb.org/3/genre/movie/list?api_key=959df7316541f78819dc72ef1dd3afc2&language=es-MX')
+            const result = await response.json()
+            setCategoriess(result.genres)
+        }
+
+        catch(ex) {
+            console.log(ex)
+        }
+
+    }
 
   return (
     <section className='w-full h-16 flex flex-row justify-center font-Poppins text-lg fixed z-50 bg-Fondo'>
@@ -38,11 +66,11 @@ function NavBar() {
                     <Nav link="" text="Peliculas"/>
                     <li className='relative' id='categories'>
                         <a href="" className='hover:text-blue-500 py-3 flex items-center gap-1'>Categorías {iconDown}</a>
-                        <div className={`${menuCategoriess ? 'h-40' : 'h-0'} absolute z-50 mt-0 w-40 bg-slate-800 shadow-md rounded-md transition-all duration-200 overflow-hidden flex flex-col justify-center`} id='menuCategorias'>
-                            <ul className={`${!menuCategoriess && 'hidden'} flex flex-col gap-3 px-3`}>
-                                <Nav link="" text="Peliculas"/>
-                                <Nav link="" text="Peliculas"/>
-                                <Nav link="" text="Peliculas"/>
+                        <div className={`${menuCategoriess ? 'h-fit' : 'h-0'} absolute z-50 mt-0 w-96 bg-slate-800 shadow-md rounded-md transition-all duration-200 overflow-hidden flex flex-col justify-center`} id='menuCategorias'>
+                            <ul className={`${!menuCategoriess && 'hidden'}  gap-5 p-3 grid grid-cols-2`}>
+                            {categoriess.map((category)=> (
+                                    <Nav key={category.id} link={() => setSearch(category.name)} text={category.name} onClick={() => handleCategoryClick(category)}/>
+                                ))}
                             </ul>
                         </div>
                     </li>
@@ -71,9 +99,9 @@ function NavBar() {
                             <a href="" className='hover:text-blue-500 flex items-center'>Categorías</a>
                             <div className={`${menuCategoriess ? 'h-40' : 'h-0'} absolute mt-0 w-40 bg-slate-800 shadow-md rounded-md transition-all duration-200 overflow-hidden flex flex-col justify-center`} id='menuCategorias'>
                                 <ul className={`${!menuCategoriess && 'hidden'} flex flex-col gap-3 px-3`}>
-                                    <Nav link="" text="Peliculas"/>
-                                    <Nav link="" text="Peliculas"/>
-                                    <Nav link="" text="Peliculas"/>
+                                {categoriess.map((category)=> (
+                                    <Nav key={category.id} link='' text={category.name} />
+                                ))}
                                 </ul>
                             </div>
                         </li>
@@ -83,7 +111,8 @@ function NavBar() {
 
                 {/* Contenedor Search */}
             <div className='relative hidden lg:flex'>
-                <input type="search" name="search" id="search" className='w-60 rounded-full px-4 py-1 bg-blue-950 border border-slate-600 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:transition-all duration-300' placeholder='Buscar...' />
+                <input type="search" name="search" id="search" className='w-60 rounded-full px-4 py-1 bg-blue-950 border border-slate-600 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:transition-all duration-300' placeholder='Buscar...' 
+                onChange={(e) => setSearch(e.target.value)}/>
                 <button className='p-1'>
                     {iconSearch}
                 </button>
