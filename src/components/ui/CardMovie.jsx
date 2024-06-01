@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-function CardMovie({title, poster, year, idcard}) {
+function CardMovie({title, poster, year, idcard, description}) {
 
     const [info, setInfo] = useState(false)
 
@@ -24,8 +24,9 @@ function CardMovie({title, poster, year, idcard}) {
 
 
         {info && (
-            <div className={`${info ? 'visible' : 'hidden'} absolute z-50 top-28 left-20 w-60 p-4 bg-slate-900 rounded opacity-85 pointer-events-none`}>
-                <span className='text-center font-semibold'>{title}</span>
+            <div className={`${info ? 'visible' : 'hidden'} absolute z-50 top-28 left-20 w-auto max-h-fit p-4 flex flex-col gap-1 bg-slate-900 rounded opacity-85 pointer-events-none`}>
+                <span className='text-start font-semibold'>{title}</span>
+                <p className='text-wrap max-h-96 min-w-96 text-slate-100'>{description}</p>
             </div>
         )}
 

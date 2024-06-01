@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState} from 'react'
 import Nav from './ui/Nav';
+import { Link } from 'react-router-dom';
 
 function NavBar({setSearch}) {
 
@@ -24,7 +25,6 @@ function NavBar({setSearch}) {
 
         categoriesMovies()
     }, []);
-
 
     const handleCategoryClick = async(category) => {
         try{
@@ -53,6 +53,7 @@ function NavBar({setSearch}) {
 
     }
 
+
   return (
     <section className='w-full h-16 flex flex-row justify-center font-Poppins text-lg fixed z-50 bg-Fondo'>
             {/* Contenedor NavBar */}
@@ -63,11 +64,10 @@ function NavBar({setSearch}) {
             <div>
                 <ul className='lg:flex lg:flex-row justify-around items-center gap-10 lg:gap-20 hidden'>
                     <Nav link="" text="Inicio"/>
-                    <Nav link="" text="Peliculas"/>
                     <li className='relative' id='categories'>
-                        <a href="" className='hover:text-blue-500 py-3 flex items-center gap-1'>Categorías {iconDown}</a>
+                        <Link to="/" className='hover:text-blue-500 py-3 flex items-center gap-1'>Categorías {iconDown}</Link>
                         <div className={`${menuCategoriess ? 'h-fit' : 'h-0'} absolute z-50 mt-0 w-96 bg-slate-800 shadow-md rounded-md transition-all duration-200 overflow-hidden flex flex-col justify-center`} id='menuCategorias'>
-                            <ul className={`${!menuCategoriess && 'hidden'}  gap-5 p-3 grid grid-cols-2`}>
+                            <ul className={`${!menuCategoriess && 'hidden'}  gap-5 p-3 grid grid-cols-2 cursor-pointer`}>
                             {categoriess.map((category)=> (
                                     <Nav key={category.id} link={() => setSearch(category.name)} text={category.name} onClick={() => handleCategoryClick(category)}/>
                                 ))}
@@ -96,7 +96,7 @@ function NavBar({setSearch}) {
                         <Nav link="" text="Inicio" style="w-full flex justify-center py-4"/>
                         <Nav link="" text="Peliculas " style="w-full flex justify-center items-center py-4"/>
                         <li className='relative w-full flex justify-center items-center py-4' id='categories'>
-                            <a href="" className='hover:text-blue-500 flex items-center'>Categorías</a>
+                            <Link to="/" className='hover:text-blue-500 flex items-center'>Categorías</Link>
                             <div className={`${menuCategoriess ? 'h-40' : 'h-0'} absolute mt-0 w-40 bg-slate-800 shadow-md rounded-md transition-all duration-200 overflow-hidden flex flex-col justify-center`} id='menuCategorias'>
                                 <ul className={`${!menuCategoriess && 'hidden'} flex flex-col gap-3 px-3`}>
                                 {categoriess.map((category)=> (

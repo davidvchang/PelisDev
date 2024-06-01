@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Nav(props) {
 
@@ -6,7 +7,7 @@ function Nav(props) {
 
   return (
     <li className={`${style}`}>
-        <a href={link} className={`hover:text-blue-500 `} onClick={onClick }>{text}</a>
+        <Link to={link} className={`hover:text-blue-500 `} onClick={onClick }>{text}</Link>
     </li>
   )
 }
