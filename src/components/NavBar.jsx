@@ -6,7 +6,6 @@ function NavBar({setSearch}) {
 
     const [menuCategoriess, setmenuCategoriess] = useState(false);
     const [categoriess, setCategoriess] = useState([]);
-
     const [Menu, setMenu] = useState(false)
 
     useEffect(() => {
@@ -30,7 +29,7 @@ function NavBar({setSearch}) {
         try{
             const response = await fetch(`http://api.themoviedb.org/3/discover/movie?api_key=959df7316541f78819dc72ef1dd3afc2&language=es-MX&with_genres=${category.id}`);
             const result = await response.json();
-            setSearch(result.results);
+            setSearch(prev => ({ ...prev, categories: [category] }));
             console.log(category.id)
         }
 
@@ -53,6 +52,11 @@ function NavBar({setSearch}) {
 
     }
 
+    const handleResetSearch = () => {
+        setSearch({ text: '', categories: [] });
+        navigate('/');
+    };
+
 
   return (
     <section className='w-full h-16 flex flex-row justify-center font-Poppins text-lg fixed z-50 bg-Fondo'>
@@ -63,9 +67,9 @@ function NavBar({setSearch}) {
                 {/* Contenedor Nav */}
             <div>
                 <ul className='lg:flex lg:flex-row justify-around items-center gap-10 lg:gap-20 hidden'>
-                    <Nav link="" text="Inicio"/>
+                    <Nav link="/" text="Inicio" onClick={handleResetSearch}/>
                     <li className='relative' id='categories'>
-                        <Link to="/" className='hover:text-blue-500 py-3 flex items-center gap-1'>Categorías {iconDown}</Link>
+                        <Link to="/" className='hover:text-blue-500 py-3 flex items-center gap-1' onClick={handleResetSearch}>Categorías {iconDown}</Link>
                         <div className={`${menuCategoriess ? 'h-fit' : 'h-0'} absolute z-50 mt-0 w-96 bg-slate-800 shadow-md rounded-md transition-all duration-200 overflow-hidden flex flex-col justify-center`} id='menuCategorias'>
                             <ul className={`${!menuCategoriess && 'hidden'}  gap-5 p-3 grid grid-cols-2 cursor-pointer`}>
                             {categoriess.map((category)=> (
@@ -86,22 +90,22 @@ function NavBar({setSearch}) {
                         </button>
                     </div>
                     <ul className='flex flex-col items-center pb-5 lg:hidden divide-y divide-slate-900 w-full '>
-
-                        <div className='relative mt-8 mb-7'>
-                            <input type="search" name="search" id="search" className='w-80 rounded-full px-4 py-2 bg-blue-950 border border-slate-600 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:transition-all duration-300' placeholder='Buscar...' />
+                        <div className='relative mt-8 mb-3'>
+                            <input type="search" name="search" id="search" className='w-80 rounded-full px-4 py-2 bg-blue-950 border border-slate-600 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:transition-all duration-300' placeholder='Buscar...'
+                                onChange={(e) => setSearch({ text: e.target.value, categories: [] })} />
                             <button className='p-1'>
                                 {iconSearch}
                             </button>
                         </div>
-                        <Nav link="" text="Inicio" style="w-full flex justify-center py-4"/>
-                        <Nav link="" text="Peliculas " style="w-full flex justify-center items-center py-4"/>
-                        <li className='relative w-full flex justify-center items-center py-4' id='categories'>
-                            <Link to="/" className='hover:text-blue-500 flex items-center'>Categorías</Link>
-                            <div className={`${menuCategoriess ? 'h-40' : 'h-0'} absolute mt-0 w-40 bg-slate-800 shadow-md rounded-md transition-all duration-200 overflow-hidden flex flex-col justify-center`} id='menuCategorias'>
-                                <ul className={`${!menuCategoriess && 'hidden'} flex flex-col gap-3 px-3`}>
-                                {categoriess.map((category)=> (
-                                    <Nav key={category.id} link='' text={category.name} />
-                                ))}
+                        <Nav link="/" text="Inicio" style="w-full flex justify-center py-2" onClick={handleResetSearch} />
+                        <Nav link="/" text="Peliculas" style="w-full flex justify-center items-center py-2" onClick={handleResetSearch} />
+                        <li className='relative w-full flex flex-col items-center py-4 divide-y divide-slate-900' id='categories'>
+                            <Link to="/" className='hover:text-blue-500 flex items-center -mt-2' onClick={handleResetSearch}>Categorías</Link>
+                            <div className='w-full mt-2'>
+                                <ul className='grid grid-cols-2 gap-4 pt-2 px-3 justify-items-center'>
+                                    {categoriess.map((category) => (
+                                        <Nav key={category.id} link="/" text={category.name} onClick={() => handleCategoryClick(category)} />
+                                    ))}
                                 </ul>
                             </div>
                         </li>
@@ -112,7 +116,7 @@ function NavBar({setSearch}) {
                 {/* Contenedor Search */}
             <div className='relative hidden lg:flex'>
                 <input type="search" name="search" id="search" className='w-60 rounded-full px-4 py-1 bg-blue-950 border border-slate-600 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:transition-all duration-300' placeholder='Buscar...' 
-                onChange={(e) => setSearch(e.target.value)}/>
+                onChange={(e) => setSearch(prev => ({ ...prev, text: e.target.value }))}/>
                 <button className='p-1'>
                     {iconSearch}
                 </button>

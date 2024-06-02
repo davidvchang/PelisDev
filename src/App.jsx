@@ -4,7 +4,7 @@ import Principal from "./components/Principal"
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
 function App() {
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState({ text: '', categories: [] });
 
   return (
     <div className="w-full flex flex-col h-fit bg-Fondo items-center">
