@@ -38,7 +38,6 @@ function NavBar({setSearch}) {
         }
     };
 
-
     const categoriesMovies = async() => {
         try{
             const response = await fetch('http://api.themoviedb.org/3/genre/movie/list?api_key=959df7316541f78819dc72ef1dd3afc2&language=es-MX')
