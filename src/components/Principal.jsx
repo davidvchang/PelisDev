@@ -22,6 +22,10 @@ function Principal({search}) {
 
     useEffect(() => {
         CallApi();
+    }, [])
+
+    useEffect(() => {
+        CallApi();
     }, [page]);
 
     
