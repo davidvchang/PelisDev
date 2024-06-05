@@ -9,7 +9,7 @@ function Principal({search}) {
     const nextPage = page + 1;
     const previousPage = page> 1 ? page - 1 : 1;
 
-    const keyApi = import.meta.env.miApiKey;
+    const keyApi = import.meta.env.VITE_API_KEY;
 
     const CallApi = async() => {
         try{
