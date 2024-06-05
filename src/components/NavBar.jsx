@@ -25,9 +25,11 @@ function NavBar({setSearch}) {
         categoriesMovies()
     }, []);
 
+    const keyApi = import.meta.env.VITE_API_KEY;
+
     const handleCategoryClick = async(category) => {
         try{
-            const response = await fetch(`http://api.themoviedb.org/3/discover/movie?api_key=959df7316541f78819dc72ef1dd3afc2&language=es-MX&with_genres=${category.id}`);
+            const response = await fetch(`http://api.themoviedb.org/3/discover/movie?api_key=${keyApi}&language=es-MX&with_genres=${category.id}`);
             const result = await response.json();
             setSearch(prev => ({ ...prev, categories: [category] }));
             console.log(category.id)
@@ -40,7 +42,7 @@ function NavBar({setSearch}) {
 
     const categoriesMovies = async() => {
         try{
-            const response = await fetch('http://api.themoviedb.org/3/genre/movie/list?api_key=959df7316541f78819dc72ef1dd3afc2&language=es-MX')
+            const response = await fetch(`http://api.themoviedb.org/3/genre/movie/list?api_key=${keyApi}&language=es-MX`)
             const result = await response.json()
             setCategoriess(result.genres)
         }
