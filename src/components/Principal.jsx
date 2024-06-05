@@ -9,9 +9,11 @@ function Principal({search}) {
     const nextPage = page + 1;
     const previousPage = page> 1 ? page - 1 : 1;
 
+    const keyApi = import.meta.env.miApiKey;
+
     const CallApi = async() => {
         try{
-            const response = await fetch(`http://api.themoviedb.org/3/movie/popular?api_key=959df7316541f78819dc72ef1dd3afc2&language=es-MX&page=${page}`);
+            const response = await fetch(`http://api.themoviedb.org/3/movie/popular?api_key=${keyApi}&language=es-MX&page=${page}`);
             const result = await response.json()
             setData(result.results)
         }
