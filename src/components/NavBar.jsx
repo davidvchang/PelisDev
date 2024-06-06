@@ -23,6 +23,7 @@ function NavBar({setSearch}) {
         }); 
 
         categoriesMovies()
+        console.log('API Key:', import.meta.env.VITE_API_KEY);
     }, []);
 
     const keyApi = import.meta.env.VITE_API_KEY;
