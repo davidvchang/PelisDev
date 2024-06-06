@@ -13,7 +13,7 @@ function Principal({search}) {
 
     const CallApi = async() => {
         try{
-            const response = await fetch(`http://api.themoviedb.org/3/movie/popular?api_key=${keyApi}&language=es-MX&page=${page}`);
+            const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${keyApi}&language=es-MX&page=${page}`);
             const result = await response.json()
             setData(result.results)
         }
